@@ -1,0 +1,145 @@
+@if (productDetails!=undefined) {
+
+<div class="bg-white dark:bg-[#111827] dark:text-white">
+  <div class="pt-6">
+    <!-- Image gallery -->
+    <div class="w-[80%] mx-auto">
+      <owl-carousel-o [options]="customOptions">
+        @for (image of productDetails.images; track $index) {
+        <ng-template carouselSlide>
+          <img
+            class="w-full max-h-[400px] object-contain"
+            [src]="image"
+            [alt]=""
+          />
+        </ng-template>
+        }
+      </owl-carousel-o>
+    </div>
+    <!-- Product info -->
+    <div
+      class="mx-auto max-w-2xl px-4 pb-16 pt-10 sm:px-6 lg:grid lg:max-w-7xl lg:grid-cols-3 lg:grid-rows-[auto,auto,1fr] lg:gap-x-8 lg:px-8 lg:pb-24 lg:pt-16"
+    >
+      <div class="lg:col-span-2 lg:border-r lg:border-gray-300 lg:pr-8">
+        <div class="flex items-center justify-between">
+          <h1
+            class="text-2xl font-bold tracking-tight text-gray-900 dark:text-gray-400 sm:text-3xl"
+          >
+            {{ productDetails.title }}
+          </h1>
+          <div>
+            <button
+              (click)="addToWishList()"
+              class="transition ease-in duration-300 bg-gray-200 dark:bg-gray-800 hover:text-purple-500 shadow hover:shadow-md dark:text-purple-500 rounded-full w-8 h-8 text-center p-1"
+            >
+              @if(!isLoadingWishlist)
+              {
+                <i
+                class="fa-heart"
+                [ngClass]="{
+                  'fa-solid': wishlistProducts.includes(productId),
+                  'fa-regular': !wishlistProducts.includes(productId)
+                }"
+              ></i>
+              }
+              @if(isLoadingWishlist)
+              {
+                <i class="fa-solid fa-spinner fa-spin"></i>
+              }
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- Options -->
+      <div class="mt-4 lg:row-span-3 lg:mt-0">
+        <p class="text-3xl tracking-tight text-gray-900 dark:text-gray-300">
+          {{ productDetails.price | currency : "GBP" }}
+        </p>
+        <!-- Reviews -->
+        <div class="mt-4">
+          <div class="flex items-center justify-between">
+            <div class="flex items-center text-[#ffc908]">
+              <!-- Active: "text-gray-900", Default: "text-gray-200" -->
+              @for (item of [1,2,3,4,5].slice(0,productDetails.ratingsAverage);
+              track $index) {
+              <i class="fa-solid fa-star"></i>
+              } @if (productDetails.ratingsAverage % 1 !=0) {
+              <i class="fa-solid fa-star-half-stroke"></i>
+              }
+              <p class="text-lg text-gray-500 ms-1">
+                {{ productDetails.ratingsAverage }}({{
+                  productDetails.ratingsQuantity
+                }})
+              </p>
+            </div>
+            <div class="my-2">
+              @if (productDetails.quantity==0) {
+              <span class="bg-red-700 text-white text-sm px-2 py-1 rounded-lg"
+                >Out Of Stock</span
+              >
+              } @else if (productDetails.quantity>50) {
+              <span class="bg-green-700 text-white text-sm px-2 py-1 rounded-lg"
+                >in Stock</span
+              >
+              } @else if (productDetails.quantity<50) {
+              <span
+                class="bg-yellow-500 text-white text-sm px-2 py-1 rounded-lg"
+                >Limited</span
+              >
+              }
+            </div>
+          </div>
+        </div>
+        @if(!isLoadingCart)
+        {
+          <button
+          type="button"
+          (click)="addToCart(productId)"
+          class="mt-10 flex w-full items-center justify-center rounded-md border border-transparent px-8 py-3 text-base font-medium focus:outline-none focus:ring-2 focus:ring-offset-2 bg-[#bfe2fe] dark:bg-purple-500 hover:shadow-lg tracking-wider dark:text-white dark:hover:bg-purple-600"
+        >
+          Add to cart
+        </button>
+        }
+        @if(isLoadingCart)
+        {
+          <button
+          type="button"
+          class="w-full mt-10 py-3 font-medium cursor-not-allowed text-white bg-indigo-300 dark:bg-indigo-900 rounded-lg border-indigo-500 inline-flex space-x-2 items-center justify-center"
+          [disabled]="isLoadingCart"
+        >
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+          <span class="ml-2"> Processing... </span>
+        </button>
+        }
+      </div>
+      <div
+        class="py-10 lg:col-span-2 lg:col-start-1 lg:border-r lg:border-gray-200 lg:pb-16 lg:pr-8 lg:pt-6"
+      >
+        <div class="space-y-2">
+          <h3 class="text-gray-900 dark:text-gray-300 text-xl font-bold m-0">
+            Description :
+          </h3>
+          <p class="text-base text-gray-900 dark:text-gray-400 m-0">
+            {{ productDetails.description }}
+          </p>
+          <ul>
+            <li class="mb-1">
+              <span class="font-bold dark:text-white">Category : </span>
+              <span class="dark:text-gray-400 font-semibold">{{
+                productDetails.category.name
+              }}</span>
+            </li>
+            <li class="mb-1">
+              <span class="font-bold dark:text-white">Brand : </span>
+              <span class="dark:text-gray-400 font-semibold">{{
+                productDetails.brand.name
+              }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+}

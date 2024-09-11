@@ -1,0 +1,15 @@
+<!-- navbar -->
+<nav class="flex justify-between items-center py-5 bg-white shadow-lg shadow-neutral-400 text-gray-900 px-5 relative z-50 dark:bg-gradient-to-r dark:from-indigo-950 dark:via-indigo-900 dark:to-indigo-950 dark:text-indigo-400  dark:shadow-md dark:shadow-indigo-900">
+    <a class="text-3xl font-bold font-heading" routerLink="login">
+      <h1 class="text-indigo-900 dark:text-gray-300 text-3xl font-bold">Paranoia</h1>
+    </a>
+    <!-- Nav Links -->
+   
+   <div class="cursor-pointer dark:text-gray-300 text-indigo-900" >
+    <span (click)="darkMode()" [class]="theme=='darkmode'?'hidden':''"><i class="fa-solid fa-moon text-xl"></i></span>
+    <span (click)="lightMode()" [class]="theme=='lightmode'?'hidden':''"><i class="fa-solid fa-sun fa-2 text-xl"></i></span>
+   </div>
+    <!-- Nav Icons -->
+    
+  </nav>
+  

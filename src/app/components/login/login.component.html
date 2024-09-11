@@ -1,0 +1,93 @@
+<section class="antialiased py-8 dark:bg-[#111827]">
+  <div
+    class="max-w-lg mx-auto bg-[#f0f3f2] p-8 rounded-xl shadow-lg shadow-slate-600 dark:bg-[#111827] dark:text-[#f0f3f2] dark:shadow-gray-500"
+  >
+    <h1 class="text-4xl font-medium">Login</h1>
+    <p class="text-slate-500 mt-2 dark:text-[#f0f3f2]">Hi, Welcome back 👋</p>
+    <form [formGroup]="loginForm" (ngSubmit)="loginAuthData()" class="my-10">
+      <div class="flex flex-col space-y-5">
+        <label for="email">
+          <p class="font-medium text-slate-700 pb-2 dark:text-[#f0f3f2]">
+            Email address
+          </p>
+          <input
+            formControlName="email"
+            id="email"
+            autocomplete="off"
+            type="email"
+            class="w-full py-3 dark:bg-transparent dark:border-gray-700 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+            placeholder="Enter email address"
+          />
+          @if(loginForm.get('email')?.errors&&(loginForm.get('email')?.touched||loginForm.get('email')?.dirty))
+          { @if(loginForm.get('email')?.getError('required')) {
+          <p class="mt-1 text-sm text-red-600 dark:text-red-500">
+            <span class="font-medium">Oops!</span> Email Required !
+          </p>
+          } @if(loginForm.get('email')?.getError('email')) {
+          <p class="mt-1 text-sm text-red-600 dark:text-red-500">
+            <span class="font-medium">Oops!</span>Email is invalid !
+          </p>
+          } }
+        </label>
+        <label for="password">
+          <p class="font-medium text-slate-700 pb-2 dark:text-[#f0f3f2]">
+            Password
+          </p>
+          <input
+            formControlName="password"
+            id="password"
+            autocomplete="off"
+            type="password"
+            class="w-full py-3 dark:bg-transparent dark:border-gray-700 border border-slate-200 rounded-lg px-3 focus:outline-none focus:border-slate-500 hover:shadow"
+            placeholder="Enter your password"
+          />
+          @if(loginForm.get('password')?.errors&&(loginForm.get('password')?.touched||loginForm.get('password')?.dirty))
+          { @if(loginForm.get('password')?.getError('required')) {
+          <p class="mt-1 text-sm text-red-600 dark:text-red-500">
+            <span class="font-medium">Oops!</span> Password Required !
+          </p>
+          } @if(loginForm.get('password')?.getError('pattern')) {
+          <p class="mt-1 text-sm text-red-600 dark:text-red-500">
+            <span class="font-medium">Oops!</span> Password must be at least 6
+            chars !
+          </p>
+          } }
+        </label>
+        <div>
+          <a routerLink="/forget" class="font-medium text-indigo-600"
+            >Forgot Password?</a
+          >
+        </div>
+      
+        @if (!isLoading) {
+        <button
+          type="submit"
+          class="w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center"
+        >
+          <span>Login</span>
+          <span><i class="fa-solid fa-arrow-right-to-bracket"></i></span>
+        </button>
+
+        } @if (isLoading) {
+        <button
+          type="button"
+          class="w-full py-3 font-medium cursor-not-allowed text-white bg-indigo-300 dark:bg-indigo-900 rounded-lg border-indigo-500 inline-flex space-x-2 items-center justify-center"
+          [disabled]="isLoading"
+        >
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+          <span class="ml-2"> Processing... </span>
+        </button>
+        }
+        <p class="text-center">
+          Not registered yet?
+          <a
+            routerLink="/register"
+            class="text-indigo-600 font-medium inline-flex space-x-1 items-center"
+            ><span>Register now </span>
+            <span> <i class="fa-solid fa-arrow-up-right-from-square"></i> </span
+          ></a>
+        </p>
+      </div>
+    </form>
+  </div>
+</section>

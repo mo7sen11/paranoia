@@ -1,0 +1,143 @@
+<section
+  class="grid grid-cols-1 sm:grid-cols-1 md:grid-cols-1 lg:grid-cols-[70%,30%] space-x-4 sm:space-y-5 bg-[#edf2f7] dark:bg-[#111827]"
+>
+  <div class="cart p-5">
+    <div class="flex md:items-center justify-between max-md:flex-col">
+      <h1 class="text-3xl md:text-4xl font-bold lg:my-3 dark:text-gray-300">
+        Shopping Cart
+      </h1>
+      @if (cartProducts.length != 0) {
+        <button
+          type="button"
+          (click)="clearCart()"
+          class="py-2 px-6 rounded-full my-3 ms-auto font-medium text-white bg-red-600 dark:bg-red-900 dark:hover:bg-red-950 hover:bg-red-700rounded-lg border-red-500 hover:shadow flex space-x-2 items-center justify-center"
+        >
+          @if (!isLoading) {
+            <span>Clear Cart</span>
+          }
+          @if (isLoading) {
+            <span><i class="fa-solid fa-spinner fa-spin"></i></span>
+          }
+        </button>
+      }
+    </div>
+    @for (item of cartProducts; track item.product.id) {
+      <div
+        class="product flex md:items-center max-md:flex-col max-md:gap-y-3 space-x-4 mt-4"
+      >
+        <div>
+          <img
+            [src]="item.product.imageCover"
+            class="w-[200px] h-[200px] object-contain"
+            [alt]="item.product.title"
+          />
+        </div>
+        <div class="info w-full">
+          <h2 class="text-lg font-semibold dark:text-gray-300">
+            {{ item.product.title }}
+          </h2>
+          <h4 class="font-semibold mb-2 dark:text-gray-400">
+            price :
+            <span class="font-normal">{{ item.price | currency: "GBP" }}</span>
+          </h4>
+          <div class="flex items-center justify-between">
+            <button
+              (click)="removeProduct(item.product.id)"
+              class="text-white my-3 transition ease-in duration-300 flex items-center text-sm font-medium mb-2 md:mb-0 bg-red-500 dark:bg-red-900 px-5 py-2 hover:shadow-lg tracking-wider dark:text-white rounded-full dark:hover:bg-red-950"
+            >
+              @if (isLoadingDelete && deletedID == item.product.id) {
+                <i class="fa-solid fa-spinner fa-spin"></i>
+              } @else {
+                <i class="fa-solid fa-trash-can"></i>
+                <span class="ms-1">Remove</span>
+              }
+            </button>
+            <div class="">
+              <span
+                (click)="updateCount(item.product.id, item.count - 1)"
+                class="px-2 py-1 rounded-full cursor-pointer dark:text-gray-500 dark:hover:text-gray-300 text-indigo-600 hover:text-indigo-900 duration-500"
+                ><i class="fa-solid fa-minus-circle text-[20px]"></i
+              ></span>
+              <span class="dark:text-gray-300 text-[20px]">{{
+                item.count
+              }}</span>
+              <span
+                (click)="updateCount(item.product.id, item.count + 1)"
+                class="px-2 py-1 rounded-full cursor-pointer dark:text-gray-500 dark:hover:text-gray-300 text-indigo-600 hover:text-indigo-900 duration-500"
+                ><i class="fa-solid fa-plus-circle text-[20px]"></i
+              ></span>
+            </div>
+          </div>
+        </div>
+      </div>
+    } @empty {
+      <div class="mx-auto">
+        <img
+          src="./assets/images/empty-cart.webp"
+          class="w-full"
+          alt="Empty Cart image"
+        />
+      </div>
+    }
+  </div>
+
+  <div class="rounded-lg border-l dark:border-gray-700 p-6 shadow-lg">
+    <div class="mb-2 flex justify-between">
+      <p class="text-gray-700 dark:text-gray-300">No of items</p>
+      <p class="text-gray-700 dark:text-gray-300">
+        {{ cartInfo?.numOfCartItems }}
+      </p>
+    </div>
+    <div class="flex justify-between">
+      <p class="text-gray-700 dark:text-gray-300">Shipping</p>
+      <p class="text-gray-700 dark:text-gray-300">Free</p>
+    </div>
+    <hr class="my-4" />
+    <div class="flex justify-between">
+      <p class="text-lg font-bold dark:text-gray-300">Total</p>
+      <div class="">
+        <p class="mb-1 text-lg font-bold dark:text-gray-300">
+          {{ cartInfo?.data?.totalCartPrice | currency: "GBP" }}
+        </p>
+        <p class="text-sm text-gray-700 dark:text-indigo-500">including VAT</p>
+      </div>
+    </div>
+
+    <div class="flex items-center justify-center max-sm:flex-col w-full mt-10">
+      <button
+        [routerLink]="['/shipping', cartInfo?.cartId, 'card']"
+        type="button"
+        class="text-white max-sm:w-full disabled:bg-gray-400 disabled:text-gray-600 disabled:hover:bg-gray-400 disabled:shadow-none disabled:cursor-not-allowed bg-indigo-600 hover:bg-indigo-800 duration-500 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center dark:focus:ring-gray-800 dark:bg-indigo-700 dark:border-indigo-900 dark:hover:bg-indigo-800 dark:text-white me-2 mb-2"
+        [disabled]="cartProducts.length == 0"
+      >
+        @if (!isLoading) {
+          <i
+            class="fa-brands fa-cc-visa text-[25px] me-2 text-white dark:text-sky-200"
+          ></i>
+          <span>Pay with Card</span>
+        }
+        @if (isLoading) {
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+          <span class="ml-2"> Processing... </span>
+        }
+      </button>
+      <button
+        [routerLink]="['/shipping', cartInfo?.cartId, 'cash']"
+        type="button"
+        class="text-white max-sm:w-full disabled:bg-gray-400 disabled:text-gray-600 disabled:hover:bg-gray-400 disabled:shadow-none disabled:cursor-not-allowed bg-indigo-600 hover:bg-indigo-800 duration-500 border border-gray-200 focus:ring-4 focus:outline-none focus:ring-gray-100 font-medium rounded-lg text-sm px-5 py-2.5 text-center flex items-center justify-center dark:focus:ring-gray-800 dark:bg-indigo-700 dark:border-indigo-900 dark:hover:bg-indigo-800 dark:text-white me-2 mb-2"
+        [disabled]="cartProducts.length == 0"
+      >
+        @if (!isLoading) {
+          <i
+            class="fa-solid fa-coins text-[20px] me-2 text-white dark:text-sky-200"
+          ></i>
+          <span>Cash on delivery</span>
+        }
+        @if (isLoading) {
+          <i class="fa-solid fa-circle-notch fa-spin"></i>
+          <span class="ml-2"> Processing... </span>
+        }
+      </button>
+    </div>
+  </div>
+</section>

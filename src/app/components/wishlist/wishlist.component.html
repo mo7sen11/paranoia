@@ -1,0 +1,71 @@
+<div class="cart py-5 px-2 md:px-3 lg:px-4">
+  <h1 class="text-4xl font-bold my-3 dark:text-gray-300">Favorites</h1>
+  <h2 class="text-2xl font-semibold mb-3 text-gray-600 dark:text-gray-400">
+    <span>Items : </span> {{ wishList.length }}
+  </h2>
+
+  @for (item of wishList; track item.id) {
+    <div
+      class="product flex md:items-center max-md:flex-col max-md:gap-y-3  mt-4"
+    >
+      <div>
+        <img
+          [src]="item.imageCover"
+          class="w-[150px] h-[200px] object-contain "
+          [alt]="item.title"
+        />
+      </div>
+      <div class="info w-full ms-3">
+        <h2 class="text-lg font-semibold dark:text-gray-300">
+          {{ item.title }}
+        </h2>
+        <h4 class="font-semibold mb-2 dark:text-gray-400">
+          price :
+          <span class="font-normal">{{ item.price | currency: "GBP" }}</span>
+        </h4>
+        <div class="flex items-center gap-2 w-fit my-3  ">
+          <button
+            (click)="removeProduct(item.id)"
+            class="text-white  transition ease-in duration-300 flex justify-center items-center text-sm font-medium   bg-red-500 dark:bg-red-900 px-2 md:px-4 sm:px-3 py-2 hover:shadow-lg tracking-wider dark:text-white rounded-full dark:hover:bg-red-950"
+          >
+            @if (isLoadingDelete && deletedID == item.id) {
+              <i class="fa-solid fa-spinner fa-spin"></i>
+            } @else {
+              <i class="fa-solid fa-trash-can"></i>
+              <span class="ms-1">Remove</span>
+            }
+          </button>
+          
+          @if (isLoadingCart && item.id == productCartClickedId) {
+            <button
+              type="button"
+              class=" transition cursor-not-allowed ease-in duration-300 flex items-center text-sm font-medium  bg-[#bfe2fe] dark:bg-purple-500 px-2 md:px-4 sm:px-3 py-2 hover:shadow-lg tracking-wider dark:text-white rounded-full"
+              [disabled]="isLoadingCart"
+            >
+              <i class="fa-solid fa-circle-notch fa-spin"></i>
+              <span class="ml-2"> Processing... </span>
+            </button>
+          } @else {
+            <button
+              (click)="addToCart(item.id)"
+              class=" transition ease-in duration-300 flex justify-center items-center text-sm font-medium   bg-[#bfe2fe] dark:bg-purple-500 px-2 md:px-4 sm:px-3 py-2 hover:shadow-lg tracking-wider dark:text-white rounded-full dark:hover:bg-purple-600"
+            >
+              <span>Add To Cart</span>
+            </button>
+          }
+          <button
+            [routerLink]="['/details', item.id]"
+            class=" transition ease-in duration-300 flex items-center justify-center text-sm font-medium   bg-[#bfe2fe] dark:bg-purple-500 px-2 md:px-4 sm:px-3 py-2 hover:shadow-lg tracking-wider dark:text-white rounded-full dark:hover:bg-purple-600"
+          >
+            <span>Details</span>
+          </button>
+          
+        </div>
+      </div>
+    </div>
+  } @empty {
+    <div class="w-fit mx-auto">
+      <img src="./assets/images/empty-cart (1).png" alt="empty wishlist" />
+    </div>
+  }
+</div>

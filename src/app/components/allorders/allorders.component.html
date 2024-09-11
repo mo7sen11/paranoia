@@ -1,0 +1,183 @@
+<section class="dark:bg-[#111827]">
+  <div class="p-4 rounded-md min-h-screen">
+    <div
+      class="flex items-center justify-between dark:text-gray-300 max-md:flex-col gap-2 max-md:items-start"
+    >
+      <h2 class="dark:text-gray-300 text-gray-600 font-bold text-xl">
+        Orders Summery
+      </h2>
+      <p class="font-semibold">
+        Name : <span class="text-s font-normal">{{ userData.name }}</span>
+      </p>
+      <p class="font-semibold">
+        ID : <span class="text-s font-normal">{{ userData.id }}</span>
+      </p>
+    </div>
+
+    <div>
+      <div class="-mx-4 sm:-mx-8 px-4 sm:px-8 py-4 overflow-x-auto">
+        <div class="inline-block min-w-full shadow rounded-lg overflow-hidden">
+          <table class="min-w-full leading-normal">
+            <thead>
+              <tr>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 text-white dark:border-gray-500 bg-black dark:bg-indigo-800 dark:text-white text-left text-s font-semibold capitalize tracking-wider"
+                >
+                  Order ID
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 text-white dark:border-gray-500 bg-black dark:bg-indigo-800 dark:text-white text-left text-s font-semibold capitalize tracking-wider"
+                >
+                  Date
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 text-white dark:border-gray-500 bg-black dark:bg-indigo-800 dark:text-white text-left text-s font-semibold capitalize tracking-wider"
+                >
+                  Items
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 text-white dark:border-gray-500 bg-black dark:bg-indigo-800 dark:text-white text-left text-s font-semibold capitalize tracking-wider"
+                >
+                  Price
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 text-white dark:border-gray-500 bg-black dark:bg-indigo-800 dark:text-white text-left text-s font-semibold capitalize tracking-wider"
+                >
+                  Paid
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 text-white dark:border-gray-500 bg-black dark:bg-indigo-800 dark:text-white text-left text-s font-semibold capitalize tracking-wider"
+                >
+                  Payment by
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 text-white dark:border-gray-500 bg-black dark:bg-indigo-800 dark:text-white text-left text-s font-semibold capitalize tracking-wider"
+                >
+                  Address
+                </th>
+                <th
+                  class="px-5 py-3 border-b-2 border-gray-200 text-white dark:border-gray-500 bg-black dark:bg-indigo-800 dark:text-white text-left text-s font-semibold capitalize tracking-wider"
+                >
+                  Status
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              @for (order of Orders; track order.id) {
+                <tr>
+                  <td
+                    class="px-5 py-5 border-b border-gray-200 dark:bg-transparent dark:text-gray-300 dark:border-gray-600 bg-white text-sm"
+                  >
+                    <p>#{{ order.id }}</p>
+                  </td>
+                  <td
+                    class="px-5 py-5 border-b border-gray-200 dark:bg-transparent dark:text-gray-300 dark:border-gray-600 bg-white text-sm"
+                  >
+                    <p
+                      class="text-gray-900 dark:text-gray-300 whitespace-no-wrap"
+                    >
+                      {{ order.createdAt | date: "fullDate" }}
+                    </p>
+                  </td>
+                  <td
+                    class="px-5 py-5 border-b border-gray-200 dark:bg-transparent dark:text-gray-300 dark:border-gray-600 bg-white text-sm"
+                  >
+                    <p
+                      class="relative inline-block px-3 py-1 font-semibold text-green-900 dark:text-gray-300 leading-tight"
+                    >
+                      {{ order.cartItems.length }}
+                    </p>
+                  </td>
+                  <td
+                    class="px-5 py-5 border-b border-gray-200 dark:bg-transparent dark:text-gray-300 dark:border-gray-600 bg-white text-sm"
+                  >
+                    <p
+                      class="relative inline-block px-3 py-1 font-semibold text-green-900 dark:text-gray-300 leading-tight"
+                    >
+                      {{ order.totalOrderPrice | currency: "GBP" }}
+                    </p>
+                  </td>
+                  <td
+                    class="px-5 py-5 border-b border-gray-200 dark:bg-transparent dark:text-gray-300 dark:border-gray-600 bg-white text-sm"
+                  >
+                    @if (order.isPaid) {
+                      <span
+                        class="relative inline-block px-3 py-1 font-semibold text-green-900 dark:text-white leading-tight"
+                      >
+                        <span
+                          class="absolute inset-0 bg-green-200 dark:bg-green-500 opacity-50 rounded-full"
+                        ></span>
+                        <span class="relative">YES</span>
+                      </span>
+                    }
+                    @if (!order.isPaid) {
+                      <span
+                        class="relative inline-block px-3 py-1 font-semibold text-red-900 dark:text-white leading-tight"
+                      >
+                        <span
+                          class="absolute inset-0 bg-red-200 dark:bg-red-500 opacity-50 rounded-full"
+                        ></span>
+                        <span class="relative">NO</span>
+                      </span>
+                    }
+                  </td>
+                  <td
+                    class="px-5 py-5 border-b border-gray-200 dark:bg-transparent dark:text-gray-300 dark:border-gray-600 bg-white text-sm"
+                  >
+                    @if (order.paymentMethodType == "card") {
+                      <p
+                        class="relative inline-block px-3 py-1 font-semibold text-green-900 dark:text-gray-300 leading-tight"
+                      >
+                        {{ order.paymentMethodType }}
+                        <i
+                          class="fa-solid fa-credit-card hidden lg:inline-block"
+                        ></i>
+                      </p>
+                    }
+                    @if (order.paymentMethodType == "cash") {
+                      <p
+                        class="relative inline-block px-3 py-1 font-semibold text-green-900 dark:text-gray-300 leading-tight"
+                      >
+                        {{ order.paymentMethodType }}
+                        <i class="fa-solid fa-coins hidden lg:inline-block"></i>
+                      </p>
+                    }
+                  </td>
+                  <td
+                    class="px-5 py-5 border-b border-gray-200 dark:bg-transparent dark:text-gray-300 dark:border-gray-600 bg-white text-sm"
+                  >
+                    {{ order.shippingAddress.details }}
+                  </td>
+                  <td
+                    class="px-5 py-5 border-b border-gray-200 dark:bg-transparent dark:text-gray-300 dark:border-gray-600 bg-white text-sm"
+                  >
+                    @if (order.isDelivered) {
+                      <span
+                        class="relative inline-block px-3 py-1 font-semibold text-green-900 dark:text-white leading-tight"
+                      >
+                        <span
+                          class="absolute inset-0 bg-green-200 dark:bg-green-500 opacity-50 rounded-full"
+                        ></span>
+                        <span class="relative">Delivered</span>
+                      </span>
+                    }
+                    @if (!order.isDelivered) {
+                      <span
+                        class="relative inline-block px-3 py-1 font-semibold text-yellow-900 dark:text-white leading-tight"
+                      >
+                        <span
+                          class="absolute inset-0 bg-yellow-200 dark:bg-yellow-500 opacity-50 rounded-full"
+                        ></span>
+                        <span class="relative">Pending</span>
+                      </span>
+                    }
+                  </td>
+                </tr>
+              }
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

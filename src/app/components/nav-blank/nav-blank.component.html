@@ -1,0 +1,79 @@
+<!-- navbar -->
+<nav
+  class="flex justify-between items-center py-5 bg-[#f0f3f2] text-gray-900 md:px-2 relative z-50 dark:bg-gradient-to-r dark:from-indigo-950 dark:via-indigo-900 dark:to-indigo-950 dark:text-indigo-400 dark:shadow-md dark:shadow-indigo-900"
+>
+  <a class="text-3xl font-bold font-heading " routerLink="home">
+    <h1 class="text-indigo-900 dark:text-gray-300 text-3xl font-bold">
+      Paranoia
+    </h1>
+  </a>
+  <!-- Nav Links -->
+  <ul
+    #display
+    class="flex md:justify-center md:items-center md:space-x-5 max-md:bg-gray-200  px-0 max-md:shadow-lg max-md:absolute max-md:top-[100%] max-md:left-[-100%] duration-700 max-md:text-center max-md:p-4 max-md:w-full max-md:flex-col max-md:space-y-4 dark:max-md:bg-indigo-900 "
+  >
+    <li (click)=" hideNav()">
+      <a
+        class="dark:text-white dark:hover:text-gray-300 hover:text-sky-700 "
+        routerLink="home"
+        routerLinkActive="px-4 py-2 bg-[#bfe2fe] text-black dark:text-gray-200 dark:hover:text-gray-400 rounded-full dark:bg-indigo-700 "
+        >Home</a
+      >
+    </li>
+   
+    <li (click)=" hideNav()">
+      <a
+      class="dark:text-white dark:hover:text-gray-300 hover:text-sky-700 "
+      routerLink="products"
+      routerLinkActive="px-4 py-2 bg-[#bfe2fe] text-black dark:text-gray-200 dark:hover:text-gray-400 rounded-full dark:bg-indigo-700 "
+        >Products</a
+      >
+    </li>
+    <li (click)=" hideNav()">
+      
+      <a
+      class="dark:text-white dark:hover:text-gray-300 hover:text-sky-700 "
+      routerLink="wishlist"
+      routerLinkActive="px-4 py-2 bg-[#bfe2fe] text-black dark:text-gray-200 dark:hover:text-gray-400 rounded-full dark:bg-indigo-700 "
+      >
+        wishlist
+      </a>
+    </li>
+    
+  </ul>
+  <!-- Nav Icons -->
+  <ul class="flex space-x-4 items-center">
+    
+    <li (click)=" hideNav()">
+      <a
+        class=" dark:text-gray-400 dark:hover:text-white hover:text-indigo-500"
+        routerLink="cart"
+        routerLinkActive="bg-[#bfe2fe] dark:bg-indigo-700 dark:text-white text-black dark:text-gray-400 dark:hover:text-gray-500 p-3 rounded-full"
+      >
+        <i class="fa-solid fa-cart-shopping fa-xl"></i>
+      </a>
+    </li>
+    <li class="cursor-pointer">
+      <a (click)="logOut()"
+        class="dark:text-gray-400 dark:hover:text-white hover:text-indigo-500"
+        routerLinkActive="bg-sky-300 dark:bg-indigo-700 p-3 rounded-full"
+      >
+        <span><i class="fa-solid fa-right-from-bracket"></i></span>
+      </a>
+    </li>
+    <li>
+      <div class="cursor-pointer dark:text-gray-300 text-indigo-900" >
+        <span (click)="darkMode()" [class]="theme=='darkmode'?'hidden':''"><i class="fa-solid fa-moon text-xl"></i></span>
+        <span (click)="lightMode()" [class]="theme=='lightmode'?'hidden':''"><i class="fa-solid fa-sun fa-2 text-xl"></i></span>
+       </div>
+    </li>
+    <li class="md:hidden cursor-pointer max-md:pe-1" (click)="displayNav()">
+      <a
+        class="hover:text-sky-700 dark:hover:text-sky-50"
+        routerLinkActive="bg-sky-300 dark:text-gray-300"
+      >
+        <span><i class="fa-solid fa-bars fa-xl"></i></span>
+      </a>
+    </li>
+  </ul>
+</nav>

@@ -1,0 +1,178 @@
+<section >
+  <owl-carousel-o [options]="bannerOptions">
+    <ng-template carouselSlide
+      ><div>
+        <img
+          class="w-100 "
+          src="./assets/images/banner-noon.avif"
+          alt="banner Img"
+        />
+      </div>
+    </ng-template>
+    <ng-template carouselSlide
+      ><div>
+        <img
+          class="w-100 "
+          src="./assets/images/banner noon2.avif"
+          alt="banner Img"
+        />
+      </div>
+    </ng-template>
+    <ng-template carouselSlide
+      ><div>
+        <img
+          class="w-100 "
+          src="./assets/images/banner3noon.avif"
+          alt="banner Img"
+        />
+      </div>
+    </ng-template>
+  </owl-carousel-o>
+</section>
+
+<main class="px-2 mb-4">
+  <section
+    class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 my-6 gap-3 xl:w-[90%] mx-auto"
+  >
+    <div class="bg-[#edf2f7] dark:bg-[#111827] shadow-md p-5 rounded-md">
+      <div class="mx-auto">
+        <img src="./assets/images/f1.png" class="w-full" alt="Free Shipping" />
+      </div>
+      <h2 class="bg-[#dbf4f6] text-center p-2 rounded-md mt-2">
+        Free Shipping
+      </h2>
+    </div>
+    <div class="bg-[#edf2f7] dark:bg-[#111827] shadow-md p-5 rounded-md">
+      <div class="mx-auto">
+        <img src="./assets/images/f2.png" class="w-full" alt="Order online" />
+      </div>
+      <h2 class="bg-[#f8e7f0] text-center p-2 rounded-md mt-2">Order online</h2>
+    </div>
+    <div class="bg-[#edf2f7] dark:bg-[#111827] shadow-md p-5 rounded-md">
+      <div class="mx-auto">
+        <img src="./assets/images/f3.png" class="w-full" alt="Save money" />
+      </div>
+      <h2 class="bg-[#eaf5d8] text-center p-2 rounded-md mt-2">Save money</h2>
+    </div>
+    <div class="bg-[#edf2f7] dark:bg-[#111827] shadow-md p-5 rounded-md">
+      <div class="mx-auto">
+        <img src="./assets/images/f4.png" class="w-full" alt="Promotions" />
+      </div>
+      <h2 class="bg-[#b6d7eb] text-center p-2 rounded-md mt-2">Promotions</h2>
+    </div>
+    <div class="bg-[#edf2f7] dark:bg-[#111827] shadow-md p-5 rounded-md">
+      <div class="mx-auto">
+        <img src="./assets/images/f5.png" class="w-full" alt="Happy sell" />
+      </div>
+      <h2 class="bg-[#e3ddf4] text-center p-2 rounded-md mt-2">Happy sell</h2>
+    </div>
+    <div class="bg-[#edf2f7] dark:bg-[#111827] shadow-md p-5 rounded-md">
+      <div class="mx-auto">
+        <img src="./assets/images/f6.png" class="w-full" alt="F24/7 Support" />
+      </div>
+      <h2 class="bg-[#dfa589] text-center p-2 rounded-md mt-2">
+        F24/7 Support
+      </h2>
+    </div>
+  </section>
+
+  <h1 class="dark:text-gray-300 mb-6 text-4xl font-semibold px-2">
+    Trending Now
+  </h1>
+  <div
+    class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 2xl:grid-cols-5 gap-5 px-2 my-5"
+  >
+    @for (product of productsList.slice(20, 35); track product.id) {
+      <div
+        class="card bg-[#edf2f7] dark:bg-[#111827] py-4 px-3 rounded-lg border border-[#bee2ff] dark:border-none hover:scale-[1.02] ease-in duration-300"
+      >
+        <div class="upper mb-2 relative">
+          @if (product.quantity == 0) {
+            <span
+              class="bg-red-700 text-white text-xs px-2 py-1 rounded-lg absolute top-0 start-0"
+              >Out Of Stock</span
+            >
+          } @else if (product.quantity > 50) {
+            <span
+              class="bg-green-700 text-white text-xs px-2 py-1 rounded-lg absolute top-0 start-0"
+              >in Stock</span
+            >
+          } @else if (product.quantity < 50) {
+            <span
+              class="bg-yellow-500 text-white text-xs px-2 py-1 rounded-lg absolute top-0 start-0"
+              >Limited</span
+            >
+          }
+          <button
+            (click)="addToWishList(product.id)"
+            class="absolute top-0 end-0 transition ease-in duration-300 bg-gray-200 dark:bg-gray-800 hover:text-purple-700 shadow hover:shadow-md dark:text-purple-500 rounded-full w-8 h-8 text-center p-1"
+          >
+            @if (isLoadingWishlist && productWishlistClickedId == product.id) {
+              <i class="fa-solid fa-spinner fa-spin"></i>
+            } @else {
+              <i
+                class="fa-heart"
+                [ngClass]="{
+                  'fa-solid': wishlistProducts.includes(product.id),
+                  'fa-regular': !wishlistProducts.includes(product.id),
+                }"
+              ></i>
+            }
+          </button>
+          <div
+            class="img cursor-pointer"
+            [routerLink]="['/details', product.id]"
+          >
+            <img
+              class="w-full rounded-lg"
+              [src]="product.imageCover"
+              [alt]="product.title"
+            />
+          </div>
+        </div>
+        <div
+          class="body cursor-pointer"
+          [routerLink]="['/details', product.id]"
+        >
+          <div class="rating">
+            <i
+              class="fa-solid fa-star text-[#ffc908] dark:text-red-500 mr-1"
+            ></i>
+            <span class="text-gray-500">{{ product.ratingsAverage }}</span>
+            <span class="text-gray-500">({{ product.ratingsQuantity }})</span>
+          </div>
+          <div class="info dark:text-gray-400 my-2">
+            <h2 class="text-xl text-indigo-500 mb-1">
+              {{ product.category.name }}
+            </h2>
+            <h3 class="text-lg truncate">
+              {{ product.title }}
+            </h3>
+            <h4 class="font-semibold mt-1">
+              {{ product.price | currency: "GBP" }}
+            </h4>
+          </div>
+        </div>
+        <div class="footer">
+          @if (isLoadingCart && product.id == productCartClickedId) {
+            <button
+              type="button"
+              class="my-3 transition cursor-not-allowed ease-in duration-300 flex items-center text-sm font-medium mb-2 md:mb-0 bg-[#bfe2fe] dark:bg-purple-500 px-5 py-2 hover:shadow-lg tracking-wider dark:text-white rounded-full"
+              [disabled]="isLoadingCart"
+            >
+              <i class="fa-solid fa-circle-notch fa-spin"></i>
+              <span class="ml-2"> Processing... </span>
+            </button>
+          } @else {
+            <button
+              (click)="addToCart(product.id)"
+              class="my-3 transition ease-in duration-300 flex items-center text-sm font-medium mb-2 md:mb-0 bg-[#bfe2fe] dark:bg-purple-500 px-5 py-2 hover:shadow-lg tracking-wider dark:text-white rounded-full dark:hover:bg-purple-600"
+            >
+              <span>Add To Cart</span>
+            </button>
+          }
+        </div>
+      </div>
+    }
+  </div>
+</main>

@@ -1,0 +1,149 @@
+
+    
+    
+ 
+ <section class=" antialiased  bg-[#f0f3f2] py-5 dark:bg-[#111827]">
+  <div class="max-w-lg mx-auto   dark:bg-[#111827] dark:text-[#f0f3f2] dark:shadow-gray-500 p-8  flex flex-col items-center   bg-[#f0f3f2]  rounded-xl shadow-lg shadow-slate-600">
+    <div class=" self-start mb-3">
+     <h4 class="block font-sans text-2xl font-semibold leading-snug tracking-normal text-blue-gray-900 antialiased">
+         Sign Up
+       </h4>
+       <p class="mt-1 block font-sans text-base font-normal leading-relaxed text-gray-700 antialiased dark:text-gray-500">
+         Enter your details to register.
+       </p>
+    </div>
+
+<form  [formGroup]="registerForm"  class="w-full flex flex-col gap-4"  (ngSubmit)="RegisterAuthData()">
+  
+  <div class="flex items-start flex-col justify-start">
+    <label for="lastName" class="font-medium text-slate-700  dark:text-gray-200 mr-2">Name</label>
+    <input formControlName="name" type="text" id="lastName"  class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+    @if(registerForm.get('name')?.errors&&(registerForm.get('name')?.touched||registerForm.get('name')?.dirty))
+    {
+
+      @if(registerForm.get('name')?.getError('required'))
+      {
+        <p class="mt-1 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> Name Required !</p>
+
+      }
+      @if(registerForm.get('name')?.getError('minlength'))
+      {
+        <p class="mt-1 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> Name must be at least 3 characters long !</p>
+      }
+      @if(registerForm.get('name')?.getError('maxlength')) {
+        <p class="mt-1 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> Name must be less than or equal  20 chars !</p>
+
+      }
+    }
+
+  
+
+  </div>
+  <div class="flex items-start flex-col justify-start">
+    <label for="email" class="font-medium text-slate-700  dark:text-gray-200 mr-2">Email</label>
+    <input formControlName="email" type="email" id="email" class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+ 
+ 
+    @if(registerForm.get('email')?.errors&&(registerForm.get('email')?.touched||registerForm.get('email')?.dirty))
+    {
+
+      @if(registerForm.get('email')?.getError('required'))
+      {
+        <p class="mt-1 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> Email Required !</p>
+
+      }
+      @if(registerForm.get('email')?.getError('email'))
+      {
+        <p class="mt-1 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span>Email is invalid !</p>
+      }
+     
+    }
+ 
+ 
+ 
+ 
+  </div>
+  <div class="flex items-start flex-col justify-start">
+    <label for="phone" class="font-medium text-slate-700  dark:text-gray-200 mr-2">Phone</label>
+    <input formControlName="phone" type="tel" id="phone"  class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+  
+    @if(registerForm.get('phone')?.errors&&(registerForm.get('phone')?.touched||registerForm.get('phone')?.dirty))
+    {
+
+      @if(registerForm.get('phone')?.getError('required'))
+      {
+        <p class="mt-1 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> Phone Required !</p>
+
+      }
+      @if(registerForm.get('phone')?.getError('pattern'))
+      {
+        <p class="mt-1 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span>Phone is invalid !</p>
+      }
+     
+    }
+  
+  
+  </div>
+  <div class="flex items-start flex-col justify-start">
+    <label for="password" class="font-medium text-slate-700  dark:text-gray-200 mr-2">Password</label>
+    <input formControlName="password" type="password" id="password"  class="w-full  px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+ 
+ 
+    @if(registerForm.get('password')?.errors&&(registerForm.get('password')?.touched||registerForm.get('password')?.dirty))
+    {
+
+      @if(registerForm.get('password')?.getError('required'))
+      {
+        <p class="mt-1 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> Password Required !</p>
+
+      }
+      @if(registerForm.get('password')?.getError('pattern'))
+      {
+        <p class="mt-1 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> Password must be at least 6 chars !</p>
+      }
+     
+    }
+ 
+ 
+ 
+ 
+  </div>
+  <div class="flex items-start flex-col justify-start">
+    <label for="confirmPassword" class="font-medium text-slate-700  dark:text-gray-200 mr-2">Confirm Password</label>
+    <input formControlName="rePassword" type="password" id="confirmPassword"  class="w-full px-3 dark:text-gray-200 dark:bg-gray-900 py-2 rounded-md border border-gray-300 dark:border-gray-700 focus:outline-none focus:ring-1 focus:ring-blue-500">
+  
+  
+    @if(registerForm.errors!=null &&(registerForm.get('rePassword')?.touched||registerForm.get('rePassword')?.dirty))
+    {
+        <p class="mt-1 text-sm text-red-600 dark:text-red-500"><span class="font-medium">Oops!</span> Password confirmation is incorrect !</p>
+    }
+  
+  
+  
+  </div>
+
+
+
+ 
+    @if (!isLoading) {
+  <button  type="submit"  class="w-full py-3 font-medium text-white bg-indigo-600 hover:bg-indigo-700 rounded-lg border-indigo-500 hover:shadow inline-flex space-x-2 items-center justify-center">
+    <span>Register</span>
+  </button>
+      
+    }
+    @if (isLoading) {
+      <button type="button" class="w-full py-3 font-medium cursor-not-allowed  text-white bg-indigo-300 dark:bg-indigo-900  rounded-lg border-indigo-500 inline-flex space-x-2 items-center justify-center" [disabled]="isLoading">
+        <i class="fa-solid fa-circle-notch fa-spin"></i>
+          <span class="ml-2"> Processing... </span>
+      </button>
+    }
+<div class="mt-4 text-center">
+  <p class="text-center">Already have an account? <a routerLink="/login" class="text-indigo-600 font-medium inline-flex space-x-1 items-center"><span> Login </span>
+    <span>
+        <i class="fa-solid fa-arrow-up-right-from-square"></i>
+  </span></a></p>
+</div>
+</form>
+
+   </div>
+ </section>

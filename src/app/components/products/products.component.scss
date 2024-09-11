@@ -1,0 +1,14 @@
+.car-img
+{
+    height:200px;
+    width: 100px;
+    border-radius: 50%;
+    object-fit: fill;
+}
+@media (max-width:662px) {
+    .car-img{
+        height: 130px;
+        width: 50px;
+    }
+}
+
